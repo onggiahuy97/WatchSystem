@@ -8,14 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var selection: Panel? = nil
+    @State private var path = NavigationPath()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationSplitView {
+            Sidebar(selection: $selection)
+        } detail: {
+            NavigationStack(path: $path) {
+                DetailColumn(selection: $selection)
+            }
         }
-        .padding()
+        .onChange(of: selection) { _ in
+            path.removeLast(path.count)
+        }
     }
 }
 

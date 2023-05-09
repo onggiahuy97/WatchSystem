@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "iswiftlib",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onggiahuy97/iSwiftLib.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "bdb9b96bd93edbde2d16dab34fee51243df8a52e"
+      }
+    }
+  ],
+  "version" : 2
+}

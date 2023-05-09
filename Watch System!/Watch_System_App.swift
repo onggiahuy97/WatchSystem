@@ -13,5 +13,8 @@ struct Watch_System_App: App {
         WindowGroup {
             ContentView()
         }
+        #if os(macOS)
+        .defaultSize(width: 1000, height: 650)
+        #endif
     }
 }

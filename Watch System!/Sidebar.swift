@@ -18,11 +18,11 @@ struct Sidebar: View {
     var body: some View {
         List(selection: $selection) {
             NavigationLink(value: Panel.contact) {
-                Label("Contacts", systemImage: "text.book.closed.fill")
+                CustomLabel("Contacts", systemName: "text.book.closed.fill", color: .gray)
             }
             
             NavigationLink(value: Panel.screenTime) {
-                Label("Screen Time", systemImage: "hourglass")
+                CustomLabel("Screen Time", systemName: "hourglass", color: .purple)
             }
         }
         .navigationTitle("Watch System!")

@@ -7,33 +7,56 @@
 
 import SwiftUI
 import Contacts
+import iSwiftLib
+
+extension CNContact {
+    var phoneNumber: String {
+        self.phoneNumbers.first?.value.stringValue ?? ""
+    }
+}
 
 struct ContactsView: View {
+    struct Contact: Identifiable {
+        let id = UUID()
+        let contact: CNContact
+    }
+    
     private let store = CNContactStore()
     
     @State private var errorMessage = ""
-    @State private var contacts = [CNContact]()
+    @State private var contacts = [Contact]()
     
     var body: some View {
-        List(contacts, id: \.self) { contact in
-            Text(contact.givenName)
+        FilteringList(
+            contacts,
+            filterKeys: \.contact.givenName, \.contact.phoneNumber,
+            focus: true
+        ) { item in
+            VStack(alignment: .leading) {
+                Text(item.contact.givenName)
+                Text("\(item.contact.phoneNumber)")
+                    .foregroundColor(.secondary)
+            }
         }
         .navigationTitle("Contacts")
         .onAppear(perform: requestAuthorization)
         .overlay(
             VStack {
-                Text("Please check the privacy for access!")
-                Button("Setting") {
-                    Task {
-                        if let url = URL(string: UIApplication.openSettingsURLString) {
-                            await UIApplication.shared.open(url)
+                if !errorMessage.isEmpty {
+                    Text("Please check the privacy for access!")
+                    Button("Setting") {
+                        Task {
+                            if let url = URL(string: UIApplication.openSettingsURLString) {
+                                await UIApplication.shared.open(url)
+                            }
                         }
                     }
+                } else {
+                    Text(errorMessage)
                 }
             }
                 .opacity(contacts.count == 0 ? 1.0 : 0)
         )
-        
     }
     
     private func requestAuthorization() {
@@ -47,8 +70,11 @@ struct ContactsView: View {
     }
     
     private func fetchContacts() {
-        let keysToFetch = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName)]
-    
+        let keysToFetch = [
+            CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
+            CNContactPhoneNumbersKey as CNKeyDescriptor
+        ]
+        
         do {
             let containers = try store.containers(matching: nil)
             for container in containers {
@@ -56,7 +82,7 @@ struct ContactsView: View {
                 
                 do {
                     let containerResults = try store.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch)
-                    contacts.append(contentsOf: containerResults)
+                    contacts.append(contentsOf: containerResults.map { Contact(contact: $0) })
                 } catch {
                     errorMessage = error.localizedDescription
                 }

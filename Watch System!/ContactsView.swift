@@ -46,9 +46,21 @@ struct ContactsView: View {
                     Text("Please check the privacy for access!")
                     Button("Setting") {
                         Task {
-                            if let url = URL(string: UIApplication.openSettingsURLString) {
-                                await UIApplication.shared.open(url)
+                            #if os(macOS)
+                            // Code specific to macOS
+                            Button("Settings") {
+                                if let url = URL(string: "x-apple.systempreferences:com.apple.preference.general") {
+                                    NSWorkspace.shared.open(url)
+                                }
                             }
+                            #else
+                            // Code specific to iOS/iPadOS
+                            Button("Settings") {
+                                if let url = URL(string: UIApplication.openSettingsURLString) {
+                                    UIApplication.shared.open(url)
+                                }
+                            }
+                            #endif
                         }
                     }
                 } else {

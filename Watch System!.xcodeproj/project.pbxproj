@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5956B00C2A10366E0060F0D9 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5956B00B2A10366E0060F0D9 /* CanvasView.swift */; };
 		595CDA192A0AE37E00E9B12E /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595CDA182A0AE37E00E9B12E /* View+Extensions.swift */; };
 		596617A62A0A128E00CCC093 /* Watch_System_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596617A52A0A128E00CCC093 /* Watch_System_App.swift */; };
 		596617A82A0A128E00CCC093 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596617A72A0A128E00CCC093 /* ContentView.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5956B00B2A10366E0060F0D9 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		595CDA182A0AE37E00E9B12E /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		596617A22A0A128E00CCC093 /* Watch System!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch System!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		596617A52A0A128E00CCC093 /* Watch_System_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Watch_System_App.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				596617B52A0A167000CCC093 /* DetailColumn.swift */,
 				596617B72A0A890000CCC093 /* ContactsView.swift */,
 				595CDA182A0AE37E00E9B12E /* View+Extensions.swift */,
+				5956B00B2A10366E0060F0D9 /* CanvasView.swift */,
 				596617A92A0A128E00CCC093 /* Assets.xcassets */,
 				596617AB2A0A128E00CCC093 /* Preview Content */,
 			);
@@ -158,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				596617A82A0A128E00CCC093 /* ContentView.swift in Sources */,
+				5956B00C2A10366E0060F0D9 /* CanvasView.swift in Sources */,
 				596617B42A0A156800CCC093 /* Sidebar.swift in Sources */,
 				596617B62A0A167000CCC093 /* DetailColumn.swift in Sources */,
 				596617B82A0A890000CCC093 /* ContactsView.swift in Sources */,

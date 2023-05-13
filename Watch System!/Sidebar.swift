@@ -44,21 +44,18 @@ struct Sidebar: View {
     @State private var panels: [Panel] = []
     
     var body: some View {
-        VStack {
-            TextField("Search", text: $filteredString.onChange {
-                if filteredString.isEmpty {
-                    panels = Panel.allCases
-                } else {
-                    panels = Panel.allCases.filter { $0.rawValue.localizedCaseInsensitiveContains(filteredString) }
-                }
-            })
-            .padding(.horizontal)
-            .textFieldStyle(.roundedBorder)
-            
-            List(panels, selection: $selection) { panel in
+        List(selection: $selection) {
+            ForEach(panels) { panel in
                 panel.content
             }
         }
+        .searchable(text: $filteredString.onChange {
+            if filteredString.isEmpty {
+                panels = Panel.allCases
+            } else {
+                panels = Panel.allCases.filter { $0.rawValue.localizedCaseInsensitiveContains(filteredString) }
+            }
+        })
         .navigationTitle("Watch System!")
         .onAppear {
             panels = Panel.allCases

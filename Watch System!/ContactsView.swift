@@ -25,19 +25,30 @@ struct ContactsView: View {
     
     @State private var errorMessage = ""
     @State private var contacts = [Contact]()
+    @State private var searchText = ""
+    @State private var filteredContacts = [Contact]()
     
     var body: some View {
-        FilteringList(
-            contacts,
-            filterKeys: \.contact.givenName, \.contact.phoneNumber,
-            focus: true
-        ) { item in
+        List(filteredContacts) { item in
             VStack(alignment: .leading) {
                 Text(item.contact.givenName)
                 Text("\(item.contact.phoneNumber)")
                     .foregroundColor(.secondary)
             }
         }
+        .searchable(text: $searchText.onChange {
+            let cleanedFilter = searchText.trimmingCharacters(in: .whitespaces)
+            if cleanedFilter.isEmpty {
+                filteredContacts = contacts
+            } else {
+                filteredContacts = contacts.filter { element in
+                    [\Contact.contact.givenName, \Contact.contact.phoneNumber].contains {
+                        element[keyPath: $0]
+                            .localizedCaseInsensitiveContains(cleanedFilter)
+                    }
+                }
+            }
+        })
         .navigationTitle("Contacts")
         .onAppear(perform: requestAuthorization)
         .overlay(
@@ -102,6 +113,8 @@ struct ContactsView: View {
         } catch {
             self.errorMessage = error.localizedDescription
         }
+        
+        filteredContacts = contacts
     }
 }
 
